@@ -1,0 +1,53 @@
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import kotlinx.android.synthetic.main.fragment_temperatures.*
+
+class MainActivity : AppCompatActivity() {
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+        val fragment = Temperatures()
+        if (savedInstanceState == null) {
+            replaceFragment(fragment)
+        }
+   }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.temperatureMenu -> {
+                val fragment = Temperatures()
+                replaceFragment(fragment)
+                true
+            }
+            R.id.distanceMenu -> {
+                val fragment = DistanceFragment()
+                replaceFragment(fragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        var fragmentManager = supportFragmentManager;
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.flFragment,fragment, "TAG")
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+}
