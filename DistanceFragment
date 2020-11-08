@@ -1,0 +1,65 @@
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_distance.*
+import kotlinx.android.synthetic.main.fragment_temperatures.*
+
+class DistanceFragment : Fragment() {
+
+    var resultNum2 : String? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_distance, container, false)
+
+        val convertMilesButton : Button = view.findViewById<Button>(R.id.convertMiles)
+        val convertKilometersButton : Button = view.findViewById<Button>(R.id.convertKilometers)
+
+        convertMilesButton.setOnClickListener {
+            val num = convertToMiles()
+            resultNum2 = num.toString()
+            resultD.text = resultNum2
+        } //fahrenheit
+
+        convertKilometersButton.setOnClickListener {
+            val num = convertToKilometers()
+
+            resultNum2 = num.toString()
+            resultD.text = resultNum2
+        }
+        return view
+    }
+
+
+    private fun convertToMiles() : Double {
+        val distance = numberToConvertD.text.toString().toDouble()
+        return distance * 0.62137119f
+    }
+
+    private fun convertToKilometers() : Double {
+        val distance = numberToConvertD.text.toString().toDouble()
+        return distance * 1.609344f
+    }
+
+
+
+
+
+
+
+
+}
