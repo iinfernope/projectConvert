@@ -1,0 +1,71 @@
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_temperatures.*
+
+class Temperatures : Fragment() {
+
+     var resultNum : String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+        setRetainInstance(true)
+    }
+
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+
+    ): View? {
+
+
+        val view = inflater.inflate(R.layout.fragment_temperatures, container, false)
+
+        val fahrenheitButton = view.findViewById<Button>(R.id.convertFahrenheit)
+        val celciusButton = view.findViewById<Button>(R.id.convertCelcius)
+
+        fahrenheitButton.setOnClickListener {
+            val num = convertToFahrenheit()
+            resultNum = num.toString()
+            result.text = resultNum
+        } //fahrenheit
+
+        celciusButton.setOnClickListener {
+            val num = convertToCelcius()
+
+            resultNum = num.toString()
+            result.text = resultNum
+
+
+        } 
+        
+
+        // Inflate the layout for this fragment
+        return view
+
+    }
+    
+
+    fun convertToFahrenheit(): Double {
+        var temperature = numberToConvert.text.toString().toDouble()
+
+        return (temperature - 32) / 1.8
+
+    }
+
+    fun convertToCelcius(): Double {
+        var temperature = numberToConvert.text.toString().toDouble()
+
+        return (temperature * 1.8) + 32
+    }
+
+}
